@@ -14,7 +14,7 @@ defmodule TodoappBackendWeb.Schema do
 
   query do
     @desc "List all tasks"
-    field :list_tasks, non_null(list_of(non_null(:task))) do
+    field :all_tasks, non_null(list_of(non_null(:task))) do
       resolve(&TodoResolver.list_tasks/3)
     end
   end
