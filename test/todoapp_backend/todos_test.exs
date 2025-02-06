@@ -33,19 +33,18 @@ defmodule TodoappBackend.TodosTest do
       assert {:error, %Ecto.Changeset{}} = Todos.create_task(@invalid_attrs)
     end
 
-    test "update_task/2 with valid data updates the task" do
+    test "update_task/1 with valid data updates the task" do
       task = task_fixture()
-      update_attrs = %{status: false, text: "some updated text", due_date: ~D[2025-02-06]}
+      update_attrs = %{id: task.id, status: false, text: "some updated text"}
 
-      assert {:ok, %Task{} = task} = Todos.update_task(task, update_attrs)
+      assert {:ok, %Task{} = task} = Todos.update_task(update_attrs)
       assert task.status == false
       assert task.text == "some updated text"
-      assert task.due_date == ~D[2025-02-06]
     end
 
-    test "update_task/2 with invalid data returns error changeset" do
+    test "update_task/1 with invalid data returns error changeset" do
       task = task_fixture()
-      assert {:error, %Ecto.Changeset{}} = Todos.update_task(task, @invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} = Todos.update_task(Map.put(@invalid_attrs, :id, task.id))
       assert task == Todos.get_task!(task.id)
     end
 
